@@ -1,23 +1,28 @@
-export const sidebarLinks = [
+export const navbarLinks = [
   {
     imgURL: "/icons/home.svg",
-    route: "/",
-    label: "Home",
+    route: "/accounts",
+    label: "Accounts",
   },
   {
     imgURL: "/icons/dollar-circle.svg",
-    route: "/my-banks",
-    label: "My Banks",
+    route: "/goals",
+    label: "Goals",
   },
   {
     imgURL: "/icons/transaction.svg",
-    route: "/transaction-history",
-    label: "Transaction History",
+    route: "/insights",
+    label: "Insights",
   },
   {
     imgURL: "/icons/money-send.svg",
-    route: "/payment-transfer",
-    label: "Transfer Funds",
+    route: "/financial-education",
+    label: "Financial Education",
+  },
+  {
+    imgURL: "/icons/money-send.svg",
+    route: "/resources",
+    label: "Resources",
   },
 ];
 

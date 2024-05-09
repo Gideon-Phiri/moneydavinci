@@ -218,9 +218,15 @@ declare interface RightSidebarProps {
   banks: Bank[] & Account[];
 }
 
-declare interface SiderbarProps {
+declare interface NavbarProps {
   user: User;
+  leftContent?: React.ReactNode;
+  /** Content to display in the center of the navbar */
+  centerContent?: React.ReactNode;
+  /** Content to display on the right side of the navbar */
+  rightContent?: React.ReactNode;
 }
+declare interface NavigationMenuProps {}
 
 declare interface RecentTransactionsProps {
   accounts: Account[];

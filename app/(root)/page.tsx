@@ -1,5 +1,6 @@
 import HeaderBox from "@/components/HeaderBox";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
+import Navbar from "@/components/navbar";
 import React from "react";
 
 const Home = () => {
