@@ -4,7 +4,9 @@ import Navbar from "@/components/navbar";
 import React from "react";
 
 const Home = () => {
-  const loggedIn = { firstName: "Gideon" };
+  const loggedIn = {
+    firstName: "Maggie",
+  };
 
   return (
     <section className="home">
@@ -22,6 +24,7 @@ const Home = () => {
             totalCurrentBalance={1250.35}
           />
         </header>
+        SET UP FINANCIAL GOALS / RECENT FINANCIAL GOALS WILL APPEAR HERE
       </div>
     </section>
   );

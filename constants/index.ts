@@ -26,6 +26,17 @@ export const navbarLinks = [
   },
 ];
 
+// user Links
+export const userLinks = [
+  {
+    route: "/profile",
+    label: "Profile",
+  },
+  {
+    route: "/settings",
+    label: "Settings",
+  },
+];
 // good_user / good_password - Bank of America
 export const TEST_USER_ID = "6627ed3d00267aa6fa3e";
 

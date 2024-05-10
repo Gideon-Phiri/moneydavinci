@@ -5,6 +5,16 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+  SheetFooter,
+  SheetHeader,
+} from "@/components/ui/sheet";
+import { userLinks } from "@/constants";
+import { Separator } from "@/components/ui/separator";
 
 const Navbar = ({ user }: NavbarProps) => {
   const pathname = usePathname();
@@ -45,7 +55,7 @@ const Navbar = ({ user }: NavbarProps) => {
           })}
         </div>
 
-        <div className="flex items-center space-x-4  ">
+        <div className="flex items-center space-x-6  ">
           {" "}
           {/* Right-side icons (shown on large screens) */}
           <Link href="/notifications" className="flex items-center space-x-4">
@@ -57,15 +67,73 @@ const Navbar = ({ user }: NavbarProps) => {
               className="size-[30px]"
             />
           </Link>
-          <Link href="/notifications" className="flex items-center space-x-4">
-            <Image
-              src="/icons/circle_user_blue.svg"
-              width={40}
-              height={40}
-              alt="Money da Vinci user icon"
-              className="size-[30px]"
-            />
-          </Link>
+          {/* user image the shows ontop of the navbar that has a sheet when clicked*/}
+          {/* ***********************************************************************/}
+          {/* ***********************************************************************/}
+          <Sheet>
+            <SheetTrigger className="z-30">
+              <div className="profile pb-8 ">
+                <div className="profile-img">
+                  <span className=" text-2xl font-bold text-white cursor-pointer">
+                    {user.firstName[0]}
+                  </span>
+                </div>
+              </div>
+            </SheetTrigger>
+
+            <SheetContent
+              side="float"
+              className="border-none bg-white profile-sheetcontent max-custom:hidden"
+            >
+              {/* sheetheader */}
+              <SheetHeader>
+                <div className="flex">
+                  <Link href="/profile/uploadimage">
+                    <div className="profile-img ">
+                      <span className=" profile-img text-2xl font-bold text-white cursor-pointer">
+                        {user.firstName[0]}
+                      </span>
+                    </div>
+                  </Link>
+                  <div className="pl-10 pt-1">
+                    <Link href="/profile">
+                      <h1 className="profile-name hover:text-blue-900">
+                        {user.firstName} {user.lastName}
+                      </h1>
+                    </Link>
+                  </div>
+                </div>
+                <div>
+                  <p className="profile-email">{user.email}</p>
+                </div>
+              </SheetHeader>
+              <nav className="flex h-auto flex-col gap-3 pt-6 text-black-2">
+                {/* Navigation links */}
+                {userLinks.map((item) => {
+                  return (
+                    <SheetClose asChild key={item.route}>
+                      <Link
+                        href={item.route}
+                        key={item.label}
+                        className="hover:text-blue-700 underline"
+                      >
+                        <p>{item.label}</p>
+                      </Link>
+                    </SheetClose>
+                  );
+                })}
+              </nav>
+              <Separator className="px-2 pt-20 text-cyan-800 border-b border-gray-400" />
+              {/**sheetfooter signout button**/}
+              <SheetFooter>
+                <div>
+                  <p className="text-left pt-2">FOOTER CONTENT HERE //</p>
+                </div>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+          {/* ***********************************************************************/}
+          {/* ***********************************************************************/}
           <Link href="/notifications" className="flex items-center space-x-4">
             <Image
               src="/icons/alert_bell_icon_2.svg"
