@@ -3,5 +3,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main>{children}</main>;
+  return (
+    <html lang="en">
+      <body className={"${inter.variable} ${ibmPlexSerif.variable}"}>
+        {children}
+      </body>
+    </html>
+  );
 }
