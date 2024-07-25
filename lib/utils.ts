@@ -2,6 +2,8 @@
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -193,3 +195,71 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+
+// PASSWORD SCHEMA
+export const passwordSchema = z
+  .string()
+  .min(8, "Password must be at least 8 characters long")
+  .refine((value) => {
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasLowercase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?~]/.test(value);
+    return hasUppercase && hasLowercase && (hasNumber || hasSpecialChar);
+  }, "Password must contain at least one uppercase letter, lowercase letter, number, or special character");
+
+// AUTH FORM SCHEMA
+export const authFormSchema = (type: string) =>
+  z.object({
+    //signup
+    firstname:
+      type === "sign-in"
+        ? z.string().optional()
+        : z
+            .string()
+            .min(3)
+            .max(25)
+            .regex(/^[A-Za-z]+$/, {
+              message: "First name should only contain alphabets",
+            }),
+    lastname:
+      type === "sign-in"
+        ? z.string().optional()
+        : z
+            .string()
+            .min(3)
+            .max(25)
+            .regex(/^[A-Za-z]+$/, {
+              message: "Last name should only contain alphabets",
+            }),
+    dateOfBirth:
+      type === "sign-in"
+        ? z.string().optional()
+        : z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+            message: "Date of Birth must be in YYYY-MM-DD format",
+          }),
+    country:
+      type === "sign-in"
+        ? z.string().optional()
+        : z
+            .string()
+            .min(3)
+            .regex(/^[A-Za-z ]+$/, {
+              message: "Country should only contain alphabets",
+            }),
+
+    //both
+    email: z.string().email(),
+    password: passwordSchema,
+
+    confirmPassword: passwordSchema.refine(
+      (value, ctx) => {
+        const password = ctx.form.password; // Access password from the form context
+        return value === password;
+      },
+      {
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
+      }
+    ),
+  });
